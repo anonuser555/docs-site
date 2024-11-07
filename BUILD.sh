@@ -8,6 +8,7 @@ BRANCH=$(git branch | awk 'FNR == 1 {print $2}')
 ###  Also runs terraform plan and terraform apply
 #################################################################
 
+cd chart/
 
 terraform init -backend=true
 
@@ -32,3 +33,4 @@ terraform apply \
         -var="target_namespace=$BRANCH" \
         -auto-approve
 
+cd ..
