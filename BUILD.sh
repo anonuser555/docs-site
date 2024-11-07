@@ -1,23 +1,34 @@
 
-
-
 BRANCH=$(git branch | awk 'FNR == 1 {print $2}')
 
-URL=$(git remote get-url origin)
+#################################################################
 
-echo $URL
+###  Terraform configuration.
+###  Creates or selects workspaces based off of the branch name
+###  Also runs terraform plan and terraform apply
+#################################################################
 
-IMAGE_PATH=$(python3 <<EOF
-import re
-matches = re.findall(r'ssh://git@.+?/(.+?).git', '$URL')
-print(matches[0])
+
+terraform init -backend=true
+
+
+python3 << EOF
+import subprocess, os
+workspaces = subprocess.getoutput("terraform workspace list")
+print(workspaces)
+if '$BRANCH' not in workspaces:
+    os.system("terraform workspace new $BRANCH")
+elif '$BRANCH' in workspaces:
+    os.system("terraform workspace select $BRANCH")
 EOF
-)
-IMAGE_TAG=registry.gitlab.platform.mcmg-cloud.local/$IMAGE_PATH:$BRANCH
 
-echo $IMAGE_TAG
 
-podman build --format docker -t "$IMAGE_TAG" -f Dockerfile .
-podman push --cert-dir /root/ca-certs "$IMAGE_TAG"
+#terraform import kubernetes_service.eos-externa
 
+terraform plan \
+        -var="target_namespace=$BRANCH" \
+
+terraform apply \
+        -var="target_namespace=$BRANCH" \
+        -auto-approve
 
