@@ -32,7 +32,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: {{ .Values.service.port }}
+  port: 8000 
 
 ingress:
   enabled: true
