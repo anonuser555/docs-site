@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ include "docs-site.fullname" . }}-pvc
+  name: {{ include "mcm-docs-site.fullname" . }}-pvc
   labels:
-    app: {{ include "docs-site.name" . }}
-    chart: {{ include "docs-site.chart" . }}
+    app: {{ include "mcm-docs-site.name" . }}
+    chart: {{ include "mcm-docs-site.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
