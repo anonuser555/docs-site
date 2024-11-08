@@ -14,6 +14,11 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
+mcm-docs-site:
+  liveReloadSupport: true
+  fastMode: true
+  docsDirectory: /mkdocs
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

@@ -34,3 +34,13 @@ terraform apply \
         -auto-approve
 
 cd ..
+
+
+#################################################################
+
+###  Copy the static files to the persistent volume.
+###
+#################################################################
+
+kubectl -n $BRANCH 
+

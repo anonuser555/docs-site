@@ -33,6 +33,13 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: LIVE_RELOAD_SUPPORT
+              value: {{ .Values.mcm-docs-site.liveReloadSupport }}
+            - name: FAST_MODE
+              value: {{ .Values.mcm-docs-site.fastMode }}
+            - name: DOCS_DIRECTORY
+              value: {{ .Values.mcm-docs-site.docsDirectory }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
